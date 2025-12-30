@@ -1,0 +1,40 @@
+{
+"findings": [
+{
+"type": "api_key_google_like",
+"severity": "high",
+"value_preview": "AIzaSyD-5_8gF",
+"context": "config.apiKey: "AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y" and logged via console.log(Initializing client with key: ${config.apiKey})",
+"description": "Hardcoded API key with a Google-style prefix ("AIza...") embedded in client-side JavaScript. Exposing this allows anyone to reuse the key, potentially causing unauthorized API access, quota/billing abuse, and easier reconnaissance. It is additionally leaked via console logging, increasing exposure in browser logs and error reports. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "jwt_bearer_token",
+"severity": "critical",
+"value_preview": "eyJhbGciOiJIUzI",
+"context": "config.bearerToken: [10, 20, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", 40] with comment: "// if the API does not work use this token"",
+"description": "A hardcoded bearer token that appears to be a JWT header segment (base64url starting with "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"). Even though only the header portion is shown here, the intent is clearly to embed a fallback bearer token in client code. Any real bearer/JWT token in public JS can be copied and replayed for unauthorized access until revoked, and signals insecure auth handling. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "analytics_tracking_id",
+"severity": "low",
+"value_preview": "UA-12345678-",
+"context": "config.analyticsId: "UA-12345678-9"",
+"description": "Hardcoded analytics tracking identifier (UA format). This is generally not a secret, but it can be used for site/app identification and minor reconnaissance or data pollution (sending fake events). Treat as low sensitivity compared to auth credentials. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "internal_api_endpoint",
+"severity": "info",
+"value_preview": "https://api.bes",
+"context": "config.apiEndpoint: "https://api.bestapiendpointintheworld1.com/v1"",
+"description": "Hardcoded API endpoint URL in client-side code. While often necessary, it reveals service location/architecture and can aid attackers in targeting the API directly (scanning, enumeration, abuse) if additional controls are weak. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "debug_logging_sensitive",
+"severity": "medium",
+"value_preview": "Initializing cl",
+"context": "console.log(Initializing client with key: ${config.apiKey})",
+"description": "Sensitive credential (API key) is printed to the console. This increases accidental exposure via browser console, shared screenshots, client-side logging tools, crash reporting, or support dumps, and should be removed or redacted. https://erikvanoosbree.nl/api-config.js"
+}
+],
+"summary": "Found a hardcoded high-entropy Google-style API key (also logged to console) and a bearer/JWT-like token embedded in client-side code, both of which can enable unauthorized use and abuse. Also noted a hardcoded analytics ID (low sensitivity) and a public API endpoint URL (informational architecture exposure)."
+}
