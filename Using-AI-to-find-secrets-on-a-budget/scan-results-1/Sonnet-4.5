@@ -1,0 +1,40 @@
+{
+  "findings": [
+    {
+      "type": "google_api_key",
+      "severity": "critical",
+      "value_preview": "AIzaSyD-5_8gFp...",
+      "context": "apiKey: \"AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y\"",
+      "description": "Hardcoded Google API key detected. This key follows the standard Google API key format (starts with 'AIzaSy' and is 39 characters long). If valid, this key can be used to consume Google Cloud services associated with the project, potentially incurring costs or accessing sensitive data. This key is exposed in client-side JavaScript at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "jwt_bearer_token",
+      "severity": "critical",
+      "value_preview": "eyJhbGciOiJIUzI1...",
+      "context": "bearerToken: [10, 20, \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\", 40]",
+      "description": "JWT (JSON Web Token) bearer token detected embedded in an array. The token 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' appears to be a JWT header (decodes to {\"alg\":\"HS256\",\"typ\":\"JWT\"}). While this specific segment is just the header, the comment indicates it's meant as a fallback authentication token. If this is a complete token or part of a larger token, it could grant unauthorized API access. Exposed at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "google_analytics_id",
+      "severity": "low",
+      "value_preview": "UA-12345678-9",
+      "context": "analyticsId: \"UA-12345678-9\"",
+      "description": "Google Analytics tracking ID detected. While UA IDs are typically public-facing and low risk, they can reveal information about site ownership and traffic analytics. This is generally acceptable in client-side code but noted for completeness. Found at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "internal_api_endpoint",
+      "severity": "medium",
+      "value_preview": "https://api.bes...",
+      "context": "apiEndpoint: \"https://api.bestapiendpointintheworld1.com/v1\"",
+      "description": "Internal API endpoint URL exposed in client-side code. While API endpoints are often necessarily public for client-side applications, exposing the full base URL can reveal backend architecture and versioning. The endpoint name suggests this may be a production API. Consider whether this endpoint requires additional protection or rate limiting. Located at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "debug_logging",
+      "severity": "low",
+      "value_preview": "console.log('In...",
+      "context": "console.log('Initializing client with key: ${config.apiKey}');",
+      "description": "Debug logging statement that attempts to log the API key to console. While the template literal syntax is incorrect (using single quotes instead of backticks, so it won't interpolate), this represents a security anti-pattern of logging sensitive credentials. If corrected, this would expose the API key in browser console logs. Found at https://erikvanoosbree.nl/api-config.js"
+    }
+  ],
+  "summary": "CRITICAL SECURITY ISSUES DETECTED: Found 2 critical secrets (Google API key and JWT bearer token) hardcoded in client-side JavaScript. The Google API key 'AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y' is fully exposed and should be immediately revoked and rotated. A JWT token is also present as a fallback authentication mechanism. Additionally detected: 1 Google Analytics ID (low risk), 1 internal API endpoint exposure (medium risk), and 1 debug logging anti-pattern (low risk). Immediate action required: Revoke exposed credentials, implement server-side API proxy, and use environment variables for all secrets."
+}
