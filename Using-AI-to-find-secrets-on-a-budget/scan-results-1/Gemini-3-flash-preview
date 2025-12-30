@@ -1,0 +1,26 @@
+{
+  "findings": [
+    {
+      "type": "Google Cloud API Key",
+      "severity": "high",
+      "value_preview": "AIzaSyD-5_8g",
+      "context": "apiKey: \"AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y\"",
+      "description": "A Google Cloud Platform (GCP) API key was found hardcoded in the configuration object. This key could potentially be used to access bills and restricted services if not properly scoped in the Google Cloud Console. https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "JWT / Bearer Token",
+      "severity": "critical",
+      "value_preview": "eyJhbGciOiJIUz",
+      "context": "bearerToken: [10, 20, \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\", 40]",
+      "description": "An encoded JSON Web Token (JWT) was found inside an array assigned to the `bearerToken` property. Exposing authentication tokens in client-side code allows attackers to impersonate users or gain unauthorized access to backend resources. https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "Google Analytics ID",
+      "severity": "info",
+      "value_preview": "UA-12345678-9",
+      "context": "analyticsId: \"UA-12345678-9\"",
+      "description": "A Universal Analytics tracking ID was found. While usually intended for client-side use, it is identified as a configuration metadata item. https://erikvanoosbree.nl/api-config.js"
+    }
+  ],
+  "summary": "The file contains a high-entropy Google API key and a hardcoded JWT bearer token, both of which pose significant security risks if exposed in a production client-side environment."
+}
