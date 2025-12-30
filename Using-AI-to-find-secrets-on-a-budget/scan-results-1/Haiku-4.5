@@ -1,0 +1,49 @@
+{
+  "findings": [
+    {
+      "type": "API_KEY",
+      "severity": "critical",
+      "value_preview": "AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y",
+      "context": "config.apiKey variable in api-config.js",
+      "description": "Hardcoded Google API key (AIzaSy* prefix is characteristic of Google Cloud API keys). This credential allows unauthorized access to Google Cloud services and can be used to consume quota, incur charges, and access protected resources. Exposing this in client-side code makes it trivially easy for attackers to abuse. This is a critical security vulnerability found at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "BEARER_TOKEN",
+      "severity": "critical",
+      "value_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      "context": "config.bearerToken array, commented as fallback token in api-config.js",
+      "description": "Hardcoded JWT bearer token embedded in an array at index 2. The token begins with 'eyJhbGciOi' which is the base64 encoding of '{\"alg\":' from a JWT header, confirming this is an authentication token. Exposing bearer tokens in client-side code allows attackers to impersonate the application and access protected API endpoints. This is critical even though it's in a non-obvious array structure. Found at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "ANALYTICS_ID",
+      "severity": "medium",
+      "value_preview": "UA-12345678-9",
+      "context": "config.analyticsId variable in api-config.js",
+      "description": "Hardcoded Google Analytics tracking ID. While not directly exploitable as a credential, exposing analytics IDs allows attackers to manipulate analytics data, inject false events, or identify the specific Google Analytics property for targeted attacks. This should be injected server-side or through environment variables. Found at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "INTERNAL_API_ENDPOINT",
+      "severity": "medium",
+      "value_preview": "https://api.bestapiendpointintheworld1.com/v1",
+      "context": "config.apiEndpoint in api-config.js",
+      "description": "Hardcoded internal API endpoint URL exposed in client-side configuration. While the domain name appears fictitious, exposing API endpoints reveals architecture and attack surface. This should be dynamically loaded from server-side configuration rather than hardcoded in client code. Found at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "CREDENTIAL_IN_LOG_STATEMENT",
+      "severity": "high",
+      "value_preview": "${config.apiKey}",
+      "context": "console.log() in initClient() function",
+      "description": "The API key is being logged to console output via template literal, which means the secret will be exposed in browser console logs, server logs, and any log aggregation systems. This is a critical information disclosure vulnerability that makes the exposed API key trivially discoverable. Found at https://erikvanoosbree.nl/api-config.js"
+    }
+  ],
+  "summary": "5 critical/high severity findings discovered. This configuration file contains multiple hardcoded secrets including a Google API key, JWT bearer token, analytics ID, and internal endpoint URL. The API key is additionally leaked via console logging. All secrets must be removed from client-side code and managed through environment variables or server-side configuration. This file requires immediate remediation."
+}
+Recommended Actions:
+
+Revoke all exposed credentials immediately via their respective provider consoles
+Remove all secrets from this file and use environment variables instead
+Implement server-side configuration for sensitive endpoints
+Use a secrets management system (AWS Secrets Manager, Azure Key Vault, HashiCorp Vault, etc.)
+Remove console.log of sensitive data
+Rotate API keys and tokens after this code is committed to version control
+Check git history for these secrets and purge them using git-filter-branch or similar tools
