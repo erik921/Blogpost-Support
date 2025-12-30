@@ -1,0 +1,33 @@
+{
+"findings": [
+{
+"type": "api_key",
+"severity": "high",
+"value_preview": "AIzaSyD-5_8gFp2",
+"context": "config.apiKey",
+"description": "Google API key exposed in client-side code; can be abused to access Google APIs if not restricted by referrers or IPs. Move secrets to server, rotate key, and implement restrictions. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "bearer_token",
+"severity": "high",
+"value_preview": "eyJhbGciOiJIUz",
+"context": "config.bearerToken[2]",
+"description": "Hardcoded JWT bearer token present in client-side configuration; could be used to impersonate or access protected resources. Remove from client, store securely on server, and rotate tokens. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "analytics_id",
+"severity": "low",
+"value_preview": "UA-12345678-9",
+"context": "config.analyticsId",
+"description": "Google Analytics tracking ID exposed in frontend code; not a secret but could enable target-specific analytics configuration exposure. Consider moving to environment variables if required. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "endpoint",
+"severity": "info",
+"value_preview": "https://api.bestapiendpointintheworld1.com/v1",
+"context": "config.apiEndpoint",
+"description": "API endpoint URL exposed in client configuration; reveals architecture and external surface area. Not a secret, but consider moving to server config or protecting initialization. https://erikvanoosbree.nl/api-config.js"
+}
+],
+"summary": "Identified 4 sensitive exposures: a Google API key, a hardcoded JWT bearer token, an exposed GA tracking ID, and an exposed API endpoint URL in client-side configuration."
+}
