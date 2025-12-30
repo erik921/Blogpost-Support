@@ -1,0 +1,33 @@
+{
+"findings": [
+{
+"type": "API Key",
+"severity": "critical",
+"value_preview": "AIzaSyD-5_8gFp2aZ1m",
+"context": "apiKey in config object",
+"description": "This is a Google API key, which, if exposed, could allow unauthorized access to Google APIs and lead to quota abuse or data breaches. End with https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "Bearer Token",
+"severity": "high",
+"value_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+"context": "bearerToken array in config object",
+"description": "This is a Base64-encoded JWT header, likely part of a bearer token used for authentication, and exposure could lead to unauthorized API access. End with https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "Tracking ID",
+"severity": "medium",
+"value_preview": "UA-12345678-9",
+"context": "analyticsId in config object",
+"description": "This is a Google Analytics ID, and its exposure might allow misuse for tracking or analytics manipulation. End with https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "Internal Endpoint",
+"severity": "info",
+"value_preview": "https://api.bestapiendpointintheworld1.com/v1",
+"context": "apiEndpoint in config object",
+"description": "This internal API endpoint reveals backend architecture, which could aid attackers in targeted attacks or reconnaissance. End with https://erikvanoosbree.nl/api-config.js"
+}
+],
+"summary": "Found 1 critical, 1 high, 1 medium, and 1 info severity issues, including a Google API key, a bearer token, a tracking ID, and an internal endpoint exposed in client-side code."
+}
