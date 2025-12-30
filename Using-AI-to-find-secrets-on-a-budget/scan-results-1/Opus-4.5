@@ -1,0 +1,33 @@
+{
+  "findings": [
+    {
+      "type": "Google API Key",
+      "severity": "critical",
+      "value_preview": "AIzaSyD-5_8gFp...",
+      "context": "apiKey: \"AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y\"",
+      "description": "Hardcoded Google API key with 'AIzaSy' prefix pattern. This key format is used for Google Cloud services (Maps, Firebase, etc.). Exposure in client-side code allows unauthorized usage, potential quota theft, and billing abuse."
+    },
+    {
+      "type": "JWT Bearer Token",
+      "severity": "high",
+      "value_preview": "eyJhbGciOiJIUz...",
+      "context": "bearerToken: [10, 20, \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\", 40]",
+      "description": "JWT token embedded in array (possible obfuscation attempt). The 'eyJ' prefix indicates a Base64-encoded JSON Web Token. This appears to be a token header with HS256 algorithm. Even partial JWT exposure reveals authentication mechanism details."
+    },
+    {
+      "type": "Google Analytics ID",
+      "severity": "low",
+      "value_preview": "UA-12345678-9",
+      "context": "analyticsId: \"UA-12345678-9\"",
+      "description": "Google Analytics tracking ID exposed. While not a secret per se, it reveals tracking infrastructure and could be used for analytics spam or competitor intelligence gathering."
+    },
+    {
+      "type": "Internal API Endpoint",
+      "severity": "info",
+      "value_preview": "https://api.best...",
+      "context": "apiEndpoint: \"https://api.bestapiendpointintheworld1.com/v1\"",
+      "description": "Internal API endpoint URL exposed in client-side configuration. This reveals backend architecture and API versioning scheme, potentially useful for reconnaissance."
+    }
+  ],
+  "summary": "Found 4 issues: 1 critical (Google API key), 1 high (JWT bearer token hidden in array), 1 low (Analytics ID), and 1 informational (API endpoint). The most concerning findings are the hardcoded Google API key and the JWT token which appear to use light obfuscation (array embedding) to avoid detection. Immediate rotation of the API key and bearer token is recommended."
+}
