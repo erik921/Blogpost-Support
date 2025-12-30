@@ -1,0 +1,26 @@
+{
+"findings": [
+{
+"type": "google_api_key",
+"severity": "critical",
+"value_preview": "AIzaSyD-5_8gFp2aZ1m9K...",
+"context": "config.apiKey",
+"description": "Hardcoded Google API key (prefix AIzaSy indicates Google services like Maps, YouTube, etc.). Exposing this in client-side JavaScript allows anyone to extract and abuse it, leading to unauthorized API calls, quota exhaustion, and billing charges. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "bearer_token",
+"severity": "high",
+"value_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+"context": "config.bearerToken array",
+"description": "Obfuscated JWT bearer token fragment (standard HS256 header) in an array, likely part of a full token. Even partial exposure in client-side code risks reconstruction and unauthorized access to protected APIs. https://erikvanoosbree.nl/api-config.js"
+},
+{
+"type": "google_analytics_id",
+"severity": "medium",
+"value_preview": "UA-12345678-9",
+"context": "config.analyticsId",
+"description": "Google Analytics Universal Analytics tracking ID. While commonly placed in client-side code, it reveals site tracking configuration and could be used for spoofing or privacy-invasive activities. https://erikvanoosbree.nl/api-config.js"
+}
+],
+"summary": "Critical Google API key and high-severity partial JWT bearer token exposed in client-side config, plus a medium-severity Google Analytics ID. Console log also risks leaking the API key at runtime."
+}
