@@ -1,0 +1,19 @@
+{
+  "findings": [
+    {
+      "type": "API key",
+      "severity": "critical",
+      "value_preview": "AIzaSyD-5_8gFp2aZ",
+      "context": "apiKey: \"AIzaSyD-5_8gFp2aZ1m9K3rJ4d0eL6n7Q8w9x0y\"",
+      "description": "This is a Google API key which provides access to Google services. Exposing this key can lead to unauthorized usage of the API and incur costs or violate usage policies. This key should be stored securely and not included in client-side code. See more at https://erikvanoosbree.nl/api-config.js"
+    },
+    {
+      "type": "Bearer token",
+      "severity": "high",
+      "value_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      "context": "bearerToken: [10, 20, \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\", 40]",
+      "description": "This is a JSON Web Token (JWT) which can be used for authentication and authorization. If compromised, it could allow attackers to impersonate users or access restricted resources. This token should be securely handled and should not be hardcoded in client-side code. See more at https://erikvanoosbree.nl/api-config.js"
+    }
+  ],
+  "summary": "The analysis detected a critical Google API key and a high-severity JWT bearer token hardcoded in the JavaScript file. Both should be secured to prevent unauthorized access."
+}
